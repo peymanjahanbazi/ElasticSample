@@ -64,6 +64,7 @@ internal class ElasticRepository
             {
                 Bool = new
                 {
+                    MinimumShouldMatch = 1
                 }
             }
         }));
