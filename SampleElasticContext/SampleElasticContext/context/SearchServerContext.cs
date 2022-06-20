@@ -23,7 +23,10 @@ namespace SampleElasticContext.context
               };
             var connectionPool = new StaticConnectionPool(nodes);
             var connectionSettings = new ConnectionSettings(connectionPool).DisableDirectStreaming()
-                .DefaultMappingFor<Product>(m => m.IndexName(ProductIndexName));
+                .DefaultMappingFor<Product>(m =>
+                m.IndexName(ProductIndexName)
+                .IdProperty(p => p.ProductId)
+                );
             elasticClient = new ElasticClient(connectionSettings);
             InitializeModels();
         }

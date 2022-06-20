@@ -46,7 +46,17 @@ internal class ElasticRepository
                 q.Term(p => p.ProductId, 1) ||
                 q.Terms(p => p.Field(f => f.ProductId)) ||
                 q.Bool(b => b.MinimumShouldMatch(1)
-                .Should(p => p.Term(p => p.ProductId, 1))
+                    .Should(p => p.Term(p => p.ProductId, 1))
+                    .Must(
+                        qc => qc.Term(p => p.ProductId, 3),
+                        qc => qc.Term(p => p.ProductName, "Test1"),
+                        qc => qc.Term(p => p.ProductId, 88)
+
+                    ).Filter(
+                        qc => qc.Term(p => p.ProductId, 3),
+                        qc => qc.Term(p => p.ProductName, "Test1"),
+                        qc => qc.Term(p => p.ProductId, 88)
+                    )
 
                 )
             )
